@@ -1,0 +1,16 @@
+{% extends "movies/base.html" %}
+{% block title %}{{ movie.name }}{% endblock %}
+{% block content %}
+
+<h2>{{ movie.name }}</h2>
+<img src="{{ movie.photo.url }}" width="300" alt="{{ movie.name }}">
+<p>{{ movie.description }}</p>
+
+{% if movie.video %}
+    <video controls width="500">
+        <source src="{{ movie.video.url }}" type="video/mp4">
+        Sizning brauzeringiz video formatini qo‘llab-quvvatlamaydi.
+    </video>
+{% endif %}
+
+{% endblock %}
