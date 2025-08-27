@@ -38,7 +38,12 @@ def add_movie(request):
         form = MovieForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect("home")
+            return redirect("index")
     else:
         form = MovieForm()
-    return render(request, "movies/add_movie.html", {"form": form})
+
+        context = {
+            "form": form
+        }
+
+    return render(request, "movies/add_movie.html", context)
