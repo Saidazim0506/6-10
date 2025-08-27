@@ -24,10 +24,12 @@ def genre_movies(request, genre_id):
 
     return render(request, "movies/index.html", context)
 
-def movie_detail(request, movie_id):
-    movie = get_object_or_404(Movie, id=movie_id)
+def movie_detail(request, pk: int):
+    genres = Genre.objects.all()
+    movie = get_object_or_404(Movie, pk=pk)
 
     context = {
+        "genres": genres,
         "movie": movie
     }
 
@@ -37,13 +39,13 @@ def add_movie(request):
     if request.method == "POST":
         form = MovieForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
-            return redirect("index")
+            movies = form.save()
+            return redirect("movie_detail", movies.pk)
     else:
         form = MovieForm()
 
-        context = {
-            "form": form
-        }
+    context = {
+        "form": form
+    }
 
     return render(request, "movies/add_movie.html", context)
